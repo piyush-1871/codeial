@@ -1,6 +1,9 @@
 // including express
 const express = require('express');
 
+// requiring cookie-parser
+const cookieParser = require('cookie-parser');
+
 const app = express();
 
 const port = 8000;
@@ -11,6 +14,12 @@ app.use(expressLayouts);
 
 // requiring mongoDB
 const db = require('./config/mongoose');
+
+// middleware
+app.use(express.urlencoded());
+
+app.use(cookieParser());
+
 // extract style and scripts from sub pages into layout
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
@@ -20,6 +29,7 @@ app.use(express.static(__dirname + '/assets'));
 
 // use express router
 app.use('/',require('./routes/index'));
+
 // set up view engine
 app.set('view engine','ejs');
 app.set('views','./views');
