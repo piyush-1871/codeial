@@ -87,10 +87,13 @@ module.exports.createSession = (req,res)=>{
         return res.redirect('back');
         }
 
-    })
+    });
+}
 
+module.exports.signOut = (req,res)=>{
+    console.log(req.cookies);
 
-        // handle password which dont match
-        // handle session creation
+    res.clearCookie('user_id');
 
+    return res.redirect('/users/sign-in');
 }
