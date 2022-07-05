@@ -60,10 +60,14 @@ module.exports.createSession = (req,res)=>{
     return res.redirect('/');
 }
 
-// module.exports.signOut = (req,res)=>{
-//     console.log(req.cookies);
+module.exports.destroySession = (req,res)=>{
+    
 
-//     res.clearCookie('user_id');
+    req.logout((err)=>{
+        if(err){
+            return next(err);
+        }
+    });
 
-//     return res.redirect('/users/sign-in');
-// }
+    return res.redirect('/');
+}
