@@ -22,24 +22,32 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
+
+
+// mongo store for storing cookie
+const MongoStore = require('connect-mongo')(session);
+
 // middleware
 app.use(express.urlencoded());
 // using cookie Parser
 app.use(cookieParser());
 
+// including static files
+app.use(express.static(__dirname + '/assets'));
+
+app.use(expressLayouts);
 // extract style and scripts from sub pages into layout
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
-// including static files
-app.use(express.static(__dirname + '/assets'));
+
 
 
 // set up view engine
 app.set('view engine','ejs');
 app.set('views','./views');
 
-// 
+// mongo store is used to store the session cookie in db
 app.use(session({
     name : 'codeial',
     // TODO change the secret before deployment
@@ -48,7 +56,16 @@ app.use(session({
     resave : false,
     cookie : {
         maxAge : (1000*60*100)
-    }
+    },
+    store : new MongoStore(
+        {
+        mongooseConnection : db,
+        autoRemove : 'disabled',
+        },
+        (err)=>{
+            console.log(err || 'connect-mongodb setup ok');
+        }
+    )
 }));
 
 app.use(passport.initialize());
