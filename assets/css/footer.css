@@ -1,0 +1,20 @@
+footer {
+  margin: 0;
+  display: flex;
+  height: 3rem;
+  width: 100%;
+  background-color: #5d5c5c;
+  align-items: center;
+  font-size: large;
+  color: white;
+  font-weight: bold; }
+  footer span {
+    margin-left: .5rem; }
+  footer ul {
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    list-style-type: none; }
+    footer ul a {
+      color: white;
+      text-decoration: none; }
