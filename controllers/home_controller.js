@@ -1,7 +1,27 @@
+const { populate } = require('../models/post');
+const Post = require('../models/post');
+
 module.exports.home = function(req,res){
-    res.render('home',{
-        title: "Home"
+    
+    // Post.find({},(err,posts)=>{
+    //     return res.render('home',{
+    //         title: "Codeial | Home",
+    //         posts : posts
+    //     });
+    // });
+
+    // populate the user for each post
+    Post.find({}).populate('user').exec(function(err,posts){
+        // if(err){
+        //     console.log('error in populating.')
+        // }
+        return res.render('home',{
+            title: "Codeial | Home",
+            posts : posts
+        });
     })
+    
+    
     // return res.end('<h1>Express is up for codeial</h1>')
 }
 

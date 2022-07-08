@@ -20,10 +20,13 @@ module.exports.signUp = function(req,res){
 module.exports.signIn = function(req,res){
     if(req.isAuthenticated()){
         res.redirect('/users/profile');
+    }else{
+        console.log('user not found');
+        return res.render('user_sign_in',{
+            title : "Codeial | Sign In"
+        });
     }
-    return res.render('user_sign_in',{
-        title : "Codeial | Sign In"
-    });
+    
 }
 
 
