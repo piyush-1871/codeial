@@ -1,6 +1,6 @@
 const { populate } = require('../models/post');
 const Post = require('../models/post');
-
+const User = require('../models/user');
 module.exports.home = function(req,res){
     
     // Post.find({},(err,posts)=>{
@@ -20,13 +20,18 @@ module.exports.home = function(req,res){
         }
     })
     .exec(function(err,posts){
-        // if(err){
-        //     console.log('error in populating.')
-        // }
-        return res.render('home',{
-            title: "Codeial | Home",
-            posts : posts
-        });
+        if(err){
+            console.log('error in populating.');
+            return;
+        }
+        User.find({},function(err,user){
+            return res.render('home',{
+                title: "Codeial | Home",
+                posts : posts,
+                all_users : user
+            });
+        })
+        
     })
     
     
