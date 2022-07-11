@@ -13,9 +13,13 @@ module.exports.profile = function(req,res){
 module.exports.update = function(req,res){
     if(req.user.id == req.params.id){
         User.findByIdAndUpdate(req.params.id , req.body , function(err,user){
+            req.flash('success','Profile Updated!');
+
             return res.redirect('back');
         })
     }else{
+        req.flash('error','You are not authorized!');
+
         return res.status(401).send('Unauthorized');
     }
 }
@@ -23,6 +27,7 @@ module.exports.update = function(req,res){
 // render the sign up page
 module.exports.signUp = function(req,res){
     if(req.isAuthenticated()){
+
         res.redirect('/users/profile');
     }
     return res.render('user_sign_up',{
@@ -64,6 +69,8 @@ module.exports.create = (req,res)=>{
                 return res.redirect('/users/sign-in');
             })
         }else{
+            req.flash('success','Successfully Signed Up');
+
             return res.redirect('back');
         }
     })
