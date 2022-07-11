@@ -1,21 +1,21 @@
 <link rel="stylesheet" href="/css/post.css">
 
 <li>
-    <p>
-            
-        
-         <%= post.content%>
-         
-         <%if (locals.user && locals.user.id == post.user.id){%>
-          <small class="delete">
-               <a href="/posts/destroy/<%= post.id %>">X</a>
-          </small>
-          <%}%> 
-          <br>
-         <small>
-              <%= post.user.name %>
-         </small>
-    </p>
+    <div id="post-container">
+          <p>
+               <%= post.content%>
+
+               <%if (locals.user && locals.user.id == post.user.id){%>
+                <small class="delete">
+                     <a href="/posts/destroy/<%= post.id %>">X</a>
+                </small>
+                <%}%> 
+                <br>
+               <small>
+                    <%= post.user.name %>
+               </small>
+          </p>
+    </div>
     <div class="post-comments">
          <%if(locals.user){%>
               <form action="/comments/create" method="post">
