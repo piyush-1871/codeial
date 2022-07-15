@@ -11,6 +11,8 @@ module.exports.create = async function(req,res){
         });
 
         if(req.xhr){           
+            // for populating the name of the user but not password
+            post = await post.populate('user','name').execPopulate();
             return res.status(200).json({
                 data : {
                     post : post
@@ -54,7 +56,7 @@ module.exports.destroy = async (req,res)=>{
 
             return  res.redirect('back');
         }else{
-            req.flash('Error','You Cannot Delete This Post.');
+            req.flash('Error','You Cannot Delete This Post!');
 
             res.redirect('back');
         } 
