@@ -8,16 +8,19 @@ const User = require('../models/user');
 passport.use(new googleStrategy({
     clientID : "375333308917-1174fu6k9sf1k7aeor2570b7n9aoro2p.apps.googleusercontent.com",
     clientSecret : "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",
-    callbackURL : "http://localhost:8000/user/auth/google/callback"
+    callbackURL : "http://localhost:8000/users/auth/google/callback"
     },
     function(accessToken, refreshToken, profile, done){
         // find a user
         User.findOne({email : profile.emails[0].value}).exec(function(err,user){
+            
+
             if(err){
                 console.log('error in google strategy passport',err);
                 return;
             }
-
+            console.log(accessToken, refreshToken);
+            
             console.log(profile);
             if(user){
                 // if found set this user as req.user
