@@ -1,11 +1,11 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
-
+const commentsMailer = require('../mailers/comments_mailer');
 module.exports.create = async function(req, res){
-
 
     try{
         let post = await Post.findById(req.body.post);
+
         if (post){
            let comment = await Comment.create({
                 content: req.body.content,
@@ -13,13 +13,14 @@ module.exports.create = async function(req, res){
                 user: req.user._id
             });
                 // handle error
-
             post.comments.push(comment);
             post.save();
 
+            comment = await comment.populate('user','name email');
+            commentsMailer.newComment(comment);
             if(req.xhr){
-                comment = await comment.populate('user','name').execPopulate();
-
+                
+                
                 return res.status(200).json({
                     data : {
                         comment : comment
@@ -29,7 +30,7 @@ module.exports.create = async function(req, res){
             }
 
 
-            req.flash('success','Comment Posted successfully!');
+            req.flash('success','Comment published!');
 
             res.redirect('/');
            
@@ -64,11 +65,12 @@ module.exports.destroy = async function(req, res){
             req.flash('success','Comment deleted successfully!');
             return res.redirect('back');
         }else{
+            req.flash('error', 'Unauthorized');
             return res.redirect('back');
         }    
         
     }catch(err){
         req.flash('Error',err);
-            return res.redirect('back');
+        return res.redirect('back');
     }
 }

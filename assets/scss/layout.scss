@@ -7,4 +7,23 @@ body{
     #main{
         min-height: 100vh;
     }
+    
+}
+
+button{
+    color: white;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: rgb(9, 105, 249);
+    font-size: medium;
+    border-radius: 10px;
+    border-color: white;
+    a{
+        color: white;
+        font-weight: bold;
+        // height: 3rem;
+        letter-spacing: 2px;
+        text-decoration: none;
+        
+    }
 }
