@@ -25,7 +25,7 @@ router.post('/create-session',passport.authenticate('local',
 },
 ),usersController.createSession);
 
-router.get('/forgot-password', usersController.forgotPassword);
+
 
 router.get('/sign-out',usersController.destroySession);
 
@@ -39,3 +39,5 @@ router.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/users/sign-in'
 }), usersController.createSession);
 module.exports = router;
+
+router.get('/forgot-password', usersController.forgotPassword);
