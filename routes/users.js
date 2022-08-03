@@ -25,7 +25,7 @@ router.post('/create-session',passport.authenticate('local',
 },
 ),usersController.createSession);
 
-
+router.get('/forgot-password', usersController.forgotPassword);
 
 router.get('/sign-out',usersController.destroySession);
 

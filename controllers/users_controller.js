@@ -122,3 +122,9 @@ module.exports.destroySession = (req,res)=>{
 
     return res.redirect('/');
 }
+
+module.exports.forgotPassword = (req,res)=>{
+    return res.render('users_forgot_password',{
+        title : 'User Profile',
+    });
+}
