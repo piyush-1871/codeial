@@ -62,6 +62,9 @@ module.exports.destroy = async function(req, res){
             comment.remove();
             let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
 
+            // CHANGE :: destroy the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+
             if(req.xhr){
                 return res.statuts(200).json({
                     data : {
