@@ -1,5 +1,6 @@
 // including express
 const express = require('express');
+const env = require('./config/environment');
 // used for session cookie
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -30,9 +31,11 @@ const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
+
+const path = require('path');
 app.use(sassMiddleware({
-    src : __dirname + '/assets/scss',
-    dest : __dirname +  '/assets/css',
+    src : path.join(__dirname, env.asset_path, '/scss'),
+    dest : path.join(__dirname , env.asset_path, 'css'),
     debug : true,
     outputStyle : 'extended',
     prefix : '/css'
@@ -43,7 +46,7 @@ app.use(express.urlencoded());
 // using cookie Parser
 app.use(cookieParser());
 // including static files
-app.use(express.static(__dirname + '/assets'));
+app.use(express.static(env.asset_path));
 app.use(expressLayouts);
 app.use(expressLayouts);
 // make the uploads path available to the browser
@@ -58,7 +61,7 @@ app.set('views','./views');
 app.use(session({
     name : 'codeial',
     // TODO change the secret before deployment
-    secret : 'blahh',
+    secret : env.session_cookie_key,
     saveUninitialized : false,
     resave : false,
     cookie : {
