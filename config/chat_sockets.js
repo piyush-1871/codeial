@@ -1,29 +1,25 @@
 module.exports.chatSockets = function (socketServer) {
-
-    const io = require('socket.io')(socketServer, {
-        cors: {
-            origin: "http://localhost:8000",
-            methods: ["GET", "POST"]
-        }
+    const { Server } = require('socket.io');
+    const io = new Server(socketServer);
+  
+    io.on('connection', (socket) => {
+      console.log('new connection recieved', socket.id);
+  
+      socket.on('disconnect', () => {
+        console.log('user disconnected');
+      });
+  
+      socket.on('join_room', (data) => {
+        console.log('joining requset recieve', data);
+  
+        socket.join(data.chat_room);
+  
+        io.in(data.chat_room).emit('user_joined', data);
+      });
+  
+      socket.on('send_message', (data) => {
+        console.log('joining request recieve', data);
+        io.in(data.chat_room).emit('recieved_message', data);
+      });
     });
-    io.on('connection', function (socket) {
-        // console.log('new connection received', socket.id);
-
-        socket.on('disconnect', function () {
-            console.log('socket disconnected');
-            return;
-        });
-
-        socket.on('join_room', function (data) {
-            // console.log('Joining request rec.', data);
-
-            socket.join(data.chatroom);
-
-            io.in(data.chatroom).emit('user_joined', data);
-        });
-
-        socket.on('send_message', function(data){
-            io.in(data.chatroom).emit('receive_message', data);
-        });
-    });
-}
+  };
