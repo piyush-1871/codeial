@@ -1,6 +1,10 @@
 module.exports.chatSockets = function (socketServer) {
     const { Server } = require('socket.io');
-    const io = new Server(socketServer);
+    const io = new Server(socketServer,{
+      cors : {
+        origin : "http://localhost:8000"
+      }
+    });
   
     io.on('connection', (socket) => {
       console.log('new connection recieved', socket.id);
