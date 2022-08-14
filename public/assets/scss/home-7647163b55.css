@@ -1,0 +1,38 @@
+#home-container {
+  display: flex;
+}
+#home-container #feed-posts {
+  width: 70%;
+  padding: 10px;
+}
+#home-container #feed-posts form {
+  display: flex;
+  align-items: center;
+}
+#home-container #feed-posts form textarea {
+  border-radius: 10px;
+  padding: 5px;
+  color: black;
+  font-weight: bold;
+}
+#home-container #feed-posts form button {
+  margin-left: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 4px;
+  border: 1px gray solid;
+  font-weight: bold;
+}
+#home-container #user-friends {
+  width: 30%;
+  padding: 10px;
+  border-left: 1px solid black;
+  height: 100%;
+}
+#home-container #user-friends a {
+  cursor: pointer;
+  text-decoration: none;
+  color: rgb(242, 11, 11);
+  font-style: italic;
+}/*# sourceMappingURL=home.css.map */
